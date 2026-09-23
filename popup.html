@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <link rel="stylesheet" href="css/styles.css">
+  <title>Pop Chain</title>
+</head>
+
+<body>
+  <main class="shell">
+    <header class="topbar">
+      <div class="brand">
+        <span class="logo">◉</span><span data-i18n="title">Pop Chain</span>
+      </div><button id="settingsButton" class="icon-button" data-i18n-aria="settings" aria-label="Settings">⚙</button>
+    </header>
+    <section class="stats" aria-label="Game statistics">
+      <div>
+        <small data-i18n="score">Score</small><strong id="score">0</strong>
+      </div>
+      <div>
+        <small data-i18n="combo">Combo</small><strong id="combo">0</strong>
+      </div>
+      <div>
+        <small data-i18n="multiplier">Multiplier</small><strong id="multiplier">×1</strong>
+      </div>
+      <div>
+        <small data-i18n="time">Time</small><strong id="time">45</strong>
+      </div>
+    </section>
+    <section id="gameBoard" class="game-board" aria-label="Pop Chain game area">
+      <div id="startScreen" class="overlay">
+        <p class="eyebrow" data-i18n="ready">READY?</p>
+        <h1 data-i18n="title">Pop Chain</h1>
+        <p data-i18n="startHint">Click targets in order. Keep the chain alive.</p><button id="startButton"
+          class="primary" data-i18n="startGame">Start game</button>
+        <p id="bestLine" class="muted"></p>
+      </div>
+    </section>
+    <footer>
+      <button id="restartButton" class="text-button" data-i18n="restart">Restart</button><span id="status" class="muted"
+        data-i18n="clickToStart">Click start to play</span>
+    </footer>
+    <div class="extension-meta">
+      <a href="https://ashokri.com/donate/" target="_blank" rel="noopener noreferrer" data-i18n="donate">Donate</a><span
+        aria-hidden="true">-</span><span data-i18n="version">Version 1.0.0</span>
+    </div>
+  </main>
+  <div id="modal" class="modal hidden" role="dialog" aria-modal="true">
+    <div class="modal-card">
+      <p class="eyebrow" data-i18n="gameOver">GAME OVER</p>
+      <h2 id="finalScore">0</h2>
+      <p data-i18n="yourScore">Your score</p>
+      <div id="summary" class="summary"></div><button id="playAgain" class="primary" data-i18n="playAgain">Play
+        again</button>
+    </div>
+  </div>
+  <div id="tutorial" class="modal hidden" role="dialog" aria-modal="true">
+    <div class="modal-card tutorial">
+      <span class="logo large">◉</span>
+      <h2 data-i18n="howToPlay">How to play</h2>
+      <p data-i18n="tutorialText">Pop numbered targets from lowest to highest. Be quick—each target fades away.</p>
+      <button id="tutorialContinue" class="primary" data-i18n="gotIt">Got it</button>
+    </div>
+  </div>
+  <div id="settingsPanel" class="modal hidden" role="dialog" aria-modal="true" aria-labelledby="settingsTitle">
+    <div class="modal-card settings-panel">
+      <div class="settings-heading">
+        <h2 id="settingsTitle" data-i18n="settings">Settings</h2><button id="closeSettings" class="icon-button"
+          type="button" aria-label="Close">×</button>
+      </div>
+      <label class="field"><span data-i18n="language">Language</span><select id="language"></select></label>
+      <label class="toggle"><span><b data-i18n="sound">Sound</b><small data-i18n="soundHint">Play subtle click
+            sounds</small></span><input id="sound" type="checkbox"><i></i></label>
+      <label class="toggle"><span><b data-i18n="reducedMotion">Reduced motion</b><small
+            data-i18n="reducedMotionHint">Minimize movement and effects</small></span><input id="reducedMotion"
+          type="checkbox"><i></i></label>
+      <section class="records">
+        <h2 data-i18n="records">Your records</h2>
+        <div><span data-i18n="bestScore">Best score</span><strong id="settingsBestScore">0</strong></div>
+        <div><span data-i18n="longestChain">Longest chain</span><strong id="settingsLongestChain">0</strong></div>
+      </section>
+      <p id="saved" class="saved" aria-live="polite"></p>
+    </div>
+  </div>
+  <script type="module" src="js/popup.js"></script>
+</body>
+
+</html>
