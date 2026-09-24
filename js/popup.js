@@ -4,11 +4,16 @@ import { getSettings, saveSettings } from './storage.js';
 await initI18n();
 const game = new Game();
 const start = () => game.start();
+const updateBestLine = bestScore => {
+    const bestLine = document.querySelector('#bestLine');
+    if (bestLine)
+        bestLine.textContent = `${t('bestScore')}: ${bestScore}`;
+};
 document.querySelector('#startButton').addEventListener('click', start);
 document.querySelector('#playAgain').addEventListener('click', () => { document.querySelector('#modal').classList.add('hidden'); start(); });
 document.querySelector('#restartButton').addEventListener('click', start);
 const s = await getSettings();
-document.querySelector('#bestLine').textContent = t('bestScore') + ': ' + s.bestScore;
+updateBestLine(s.bestScore);
 const settingsPanel = document.querySelector('#settingsPanel');
 const language = document.querySelector('#language');
 const sound = document.querySelector('#sound');
@@ -27,7 +32,7 @@ document.querySelector('#settingsLongestChain').textContent = String(s.longestCh
 document.querySelector('#settingsButton').addEventListener('click', async () => {
     const records = await game.pause();
     if (records) {
-        document.querySelector('#bestLine').textContent = `${t('bestScore')}: ${records.bestScore}`;
+        updateBestLine(records.bestScore);
         document.querySelector('#settingsBestScore').textContent = String(records.bestScore);
         document.querySelector('#settingsLongestChain').textContent = String(records.longestChain);
     }
@@ -47,7 +52,7 @@ language.addEventListener('change', async () => {
     await saveInlineSettings();
     await initI18n(language.value);
     const current = await getSettings();
-    document.querySelector('#bestLine').textContent = `${t('bestScore')}: ${current.bestScore}`;
+    updateBestLine(current.bestScore);
     document.querySelector('#saved').textContent = t('saved');
 });
 sound.addEventListener('change', saveInlineSettings);
