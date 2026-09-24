@@ -119,7 +119,19 @@ export class Game {
     async end() {
         if (!this.running)
             return; this.running = false; this.paused = false; clearInterval(this.clock); this.clear(); const accuracy = this.attempts ? Math.round(this.correct / this.attempts * 100) : 0; const speed = this.clicks.length > 1 ? ((this.clicks.length - 1) / ((this.clicks[this.clicks.length - 1] - this.clicks[0]) / 1000)).toFixed(1) : '—'; const records = { bestScore: Math.max(this.settings.bestScore, this.score), longestChain: Math.max(this.settings.longestChain, this.longest) }; this.settings = { ...this.settings, ...records }; await saveSettings(records); const bestLine = document.querySelector('#bestLine'); if (bestLine)
-            bestLine.textContent = `${t('bestScore')}: ${records.bestScore}`; document.querySelector('#settingsBestScore').textContent = String(records.bestScore); document.querySelector('#settingsLongestChain').textContent = String(records.longestChain); (document.querySelector('#finalScore')).textContent = String(this.score); (document.querySelector('#summary')).innerHTML = `<div>${t('accuracy')}<strong>${accuracy}%</strong></div><div>${t('longestChain')}<strong>${this.longest}</strong></div><div>${t('avgClickSpeed')}<strong>${speed}${speed === '—' ? '' : '/s'}</strong></div><div>${t('bestScore')}<strong>${records.bestScore}</strong></div>`; document.querySelector('#modal').classList.remove('hidden');
+            bestLine.textContent = `${t('bestScore')}: ${records.bestScore}`; document.querySelector('#settingsBestScore').textContent = String(records.bestScore); document.querySelector('#settingsLongestChain').textContent = String(records.longestChain); (document.querySelector('#finalScore')).textContent = String(this.score); const summary = document.querySelector('#summary'); summary.replaceChildren(...[
+                [t('accuracy'), `${accuracy}%`],
+                [t('longestChain'), String(this.longest)],
+                [t('avgClickSpeed'), `${speed}${speed === '—' ? '' : '/s'}`],
+                [t('bestScore'), String(records.bestScore)]
+            ].map(([label, value]) => {
+                const row = document.createElement('div');
+                const strong = document.createElement('strong');
+                row.textContent = label;
+                strong.textContent = value;
+                row.append(strong);
+                return row;
+            })); document.querySelector('#modal').classList.remove('hidden');
     }
     clear() {
         clearTimeout(this.waveTimer); this.waveTimer = 0; this.accepting = false; this.targets.forEach(x => {

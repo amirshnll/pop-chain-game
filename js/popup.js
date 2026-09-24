@@ -13,7 +13,12 @@ const settingsPanel = document.querySelector('#settingsPanel');
 const language = document.querySelector('#language');
 const sound = document.querySelector('#sound');
 const reducedMotion = document.querySelector('#reducedMotion');
-language.innerHTML = languages.map(item => `<option value="${item.code}">${item.name}</option>`).join('');
+language.replaceChildren(...languages.map(item => {
+    const option = document.createElement('option');
+    option.value = item.code;
+    option.textContent = item.name;
+    return option;
+}));
 language.value = s.language;
 sound.checked = s.sound;
 reducedMotion.checked = s.reducedMotion;
